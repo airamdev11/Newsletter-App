@@ -3,7 +3,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
-const cryptoJS = require("crypt-js");
+const cryptoJS = require("crypto-js");
 
 const serverKey = "us17";
 const key = "ap1k3y";
