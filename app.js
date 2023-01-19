@@ -5,7 +5,7 @@ const https = require("https");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
 
 mailchimp.setConfig({
-    apiKey: "5c12886e846d95822154b904c346f551-us17",
+    apiKey: "939cb7db07948b00bcedd2e1b6da61e0-us17",
     server: "us17"
 });
 
@@ -86,8 +86,9 @@ app.post("/", function (req, res) {
             res.sendFile(__dirname + "/success.html");
 
         } catch (error) {
-            if(error.status===400){
+            if(error.status!==200){
                 res.sendFile(__dirname+"/failure.html");
+                console.log(error);
             }
         }
         
@@ -103,9 +104,10 @@ app.post("/failure", function (req, res) {
 
 
 //dynamic port
-app.listen(process.env.PORT || 3000, function () {
+app.listen(3000, function () {
     console.log("Server running on port 3000.");
 });
 
 //Api Key: 5c12886e846d95822154b904c346f551-us17
+//Api Key 2: 939cb7db07948b00bcedd2e1b6da61e0-us17
 //List Id: 3bfdf29636
