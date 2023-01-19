@@ -3,10 +3,17 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
+const cryptoJS = require("crypt-js");
+
+const serverKey = "us17";
+const key = "ap1k3y";
+const toEncrypt = "939cb7db07948b00bcedd2e1b6da61e0-"+serverKey;
+
+const encrypted = cryptoJS.AES.encrypt(toEncrypt,key);
 
 mailchimp.setConfig({
-    apiKey: "939cb7db07948b00bcedd2e1b6da61e0-us17",
-    server: "us17"
+    apiKey: cryptoJS.AES.decrypt(encrypted,key),
+    server: serverKey
 });
 
 
@@ -27,38 +34,6 @@ app.post("/", function (req, res) {
     const fName = req.body.fName;
     const lName = req.body.lName;
     const email = req.body.email;
-/*
-    const data = {
-        members: [
-            {
-                email_address: email,
-                status: "subscribed",
-                merge_fields: {
-                    FNAME: fName,
-                    LNAME: lName
-                }
-            }
-        ]
-    };
-
-    const jsonData = JSON.stringify(data);
-
-    const url = "https://us17.api.mailchimp.com/3.0/lists/" + creatingList.Id;
-
-    const options = {
-        method: "POST",
-        auth: "airamDev11:5c12886e846d95822154b904c346f551-us17"
-    }
-
-
-    const request = https.request(url, options, function (response) {
-        response.on("data", function (data) {
-            console.log(JSON.parse(data));
-        });
-    });
-
-    request.write(jsonData);
-    request.end();*/
 
 
     const listId = "65cf3c39c3";
@@ -108,6 +83,3 @@ app.listen(3000, function () {
     console.log("Server running on port 3000.");
 });
 
-//Api Key: 5c12886e846d95822154b904c346f551-us17
-//Api Key 2: 939cb7db07948b00bcedd2e1b6da61e0-us17
-//List Id: 65cf3c39c3
