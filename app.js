@@ -10,7 +10,7 @@ const serverKey = "us17";
 const key = "ap1k3y";
 
 const encrypted = encrypt(
-    "939cb7db07948b00bcedd2e1b6da61e0-".concat(serverKey).toString()
+    "6d8e3bd772f4b6".concat("a17a81069b02fb390c-",serverKey,"-1").toString()
 );
 
 mailchimp.setConfig({
