@@ -3,13 +3,18 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
-const cryptoJS = require("crypto-js");
+const {encrypt,decrypt} = require("./crypto");
 
 const serverKey = "us17";
 
 const key = "ap1k3y";
 
 const toEncrypt = "939cb7db07948b00bcedd2e1b6da61e0-"+serverKey;
+
+const hash = encrypt(toEncrypt);
+
+console.log(hash);
+
 
 mailchimp.setConfig({
     apiKey: toEncrypt,
