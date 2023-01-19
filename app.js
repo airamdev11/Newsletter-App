@@ -3,24 +3,20 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const https = require("https");
 const mailchimp = require("@mailchimp/mailchimp_marketing");
-const {encrypt,decrypt} = require("./crypto");
+const { encrypt, decrypt } = require("./crypto");
 
 const serverKey = "us17";
 
 const key = "ap1k3y";
 
-const toEncrypt = "939cb7db07948b00bcedd2e1b6da61e0-"+serverKey;
-
-const hash = encrypt(toEncrypt);
-
-console.log(hash);
-
+const encrypted = encrypt(
+    "939cb7db07948b00bcedd2e1b6da61e0-".concat(serverKey).toString()
+);
 
 mailchimp.setConfig({
-    apiKey: toEncrypt,
+    apiKey: decrypt(encrypted),
     server: serverKey
 });
-
 
 const app = express();
 
@@ -58,22 +54,22 @@ app.post("/", function (req, res) {
                     LNAME: userData.lastName
                 }
             });
-    
+
             console.log(
                 `Successfully added contact as an audience member. The contact's id is ${response.id}.`
             );
-            
+
             res.sendFile(__dirname + "/success.html");
 
         } catch (error) {
-            if(error.status!==200){
-                res.sendFile(__dirname+"/failure.html");
+            if (error.status !== 200) {
+                res.sendFile(__dirname + "/failure.html");
                 console.log(error);
             }
         }
-        
+
     }
-    
+
     run();
 
 });
