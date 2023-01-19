@@ -6,13 +6,13 @@ const mailchimp = require("@mailchimp/mailchimp_marketing");
 const cryptoJS = require("crypto-js");
 
 const serverKey = "us17";
+
 const key = "ap1k3y";
+
 const toEncrypt = "939cb7db07948b00bcedd2e1b6da61e0-"+serverKey;
 
-const encrypted = cryptoJS.AES.encrypt(toEncrypt,key);
-
 mailchimp.setConfig({
-    apiKey: cryptoJS.AES.decrypt(encrypted,key),
+    apiKey: toEncrypt,
     server: serverKey
 });
 
